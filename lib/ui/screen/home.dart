@@ -7,15 +7,6 @@ import 'package:hng_authentication/widgets/widget.dart';
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
   final String title;
 
   @override
@@ -23,49 +14,47 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
   var name = '';
-  var  email = '';
+  var email = '';
 
   Future getUser() async {
     final authRepository = Authentication();
     final data = await authRepository.getUser();
     if (data != null) {
-      print('sign up Email >>> ${data.email}');
-      print('sign up id >>> ${data.id}');
-      print('sign up created at >>> ${data.createdAt}');
-      setState(() {
+      print('user from getUser homepage >>> $data.name');
+      print('user getUser homepage>>> $data.email');
+           setState(() {
         name = data.name;
         email = data.email;
       });
       return data;
     } else {
       showSnackbar(context, AppColors.secondaryRedColor, 'ERROR getting user');
+      return null;
     }
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getUser();
+    // .then((data) {
+    //   if (data != null) {
+    //     setState(() {
+    //       name = data.name;
+    //       email = data.email;
+    //     });
+    //   }
+    // });
   }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-     
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.greenColor,
         elevation: 0,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
+        centerTitle: true,
         title: Text(
           widget.title,
         ),
@@ -76,7 +65,6 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-
             Center(
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(100),
@@ -85,20 +73,19 @@ class _MyHomePageState extends State<MyHomePage> {
                   height: 200,
                   width: 200,
                   fit: BoxFit.cover,
-                ),  
+                ),
               ),
             ),
             const SizedBox(height: 20),
-             Text('Welcome to home page!!!',
+            Text('Welcome to home page!!!',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             const SizedBox(height: 20),
-            Text(
-                'Name:',
+            Text('Name:',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                Text(name,
+            Text(name,
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                SizedBox(height: 5),
-                Text(email,
+            SizedBox(height: 5),
+            Text(email,
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))
           ],
         ),
@@ -125,7 +112,7 @@ class _MyHomePageState extends State<MyHomePage> {
         },
         tooltip: 'log out',
         child: const Icon(Icons.logout_rounded),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
     );
   }
 }
