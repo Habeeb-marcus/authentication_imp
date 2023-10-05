@@ -68,7 +68,6 @@ class _SignInPageState extends State<SignInPage> {
       showSnackbar(context, Colors.green, 'SignIn successful');
       print('sign up Email >>> ${data.email}');
       print('sign up id >>> ${data.id}');
-      print('sign up created at >>> ${data.createdAt}');
     } else {
       showSnackbar(context, Colors.red, 'SignIn ERROR');
     }
@@ -236,12 +235,7 @@ class _SignInPageState extends State<SignInPage> {
                               online:
                                   emailRegExMatch(emailEditingController.text),
                               buttonFunction: () async {
-                                // await overlay.during(login(email, password));
-                                // Navigator.of(context).push(MaterialPageRoute(
-                                //   builder: (context) => MyHomePage(
-                                //     title: 'Home Page',
-                                //   ),
-                                // ));
+
                                   final email = emailEditingController.text;
                                 final password = passwordEditingController.text;
                                 // loginOverlay(email, password);
